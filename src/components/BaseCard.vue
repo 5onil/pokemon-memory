@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleClick" class="pokemon-card" :class="{ flipped: isFlipped }">
+  <div @click="handleClick" class="pokemon-card" :class="isFlipped || isAMatch ? 'flipped' : ''">
     <div class="card-back">
       <img :src="backSideCard" alt="back side of card" />
     </div>
@@ -11,13 +11,21 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, defineProps, watch, computed } from 'vue'
 import backSideCard from '../assets/backsidecard.svg'
 
 // props
 const props = defineProps({
   pokemon: {
     type: Object,
+    required: true
+  },
+  isMatched: {
+    type: Array,
+    required: true
+  },
+  resetCard: {
+    type: Boolean,
     required: true
   }
 })
@@ -28,7 +36,22 @@ const { pokemon } = props
 const isFlipped = ref(false)
 
 // Emitted events
-const emits = defineEmits(['flip'])
+const emits = defineEmits(['flip', 'sendBackReset'])
+
+// Watcher
+watch(
+  () => props.resetCard,
+  (newValue, oldValue) => {
+    if (newValue) {
+      isFlipped.value = false
+      emits('sendBackReset', false)
+    }
+  }
+)
+
+const isAMatch = computed(() => {
+  return isFlipped && props.isMatched.includes(pokemon.id)
+})
 
 // Handle click on card
 const handleClick = () => {
@@ -38,6 +61,9 @@ const handleClick = () => {
 </script>
 
 <style scoped>
+.match .card-front {
+  border: 4px solid red;
+}
 .pokemon-card {
   width: 150px;
   height: 216px;

@@ -5,7 +5,10 @@
         v-for="(pokemon, index) in pokemons"
         :key="index"
         :pokemon="pokemon"
+        :isMatched="isMatched"
+        :resetCard="resetCard"
         @flip="handleIsFlipped"
+        @sendBackReset="handleReset"
         class="base-card"
       />
     </div>
@@ -19,6 +22,8 @@ import { ref, onMounted } from 'vue'
 // Data
 const pokemons = ref([])
 const flippedCard = ref([])
+const isMatched = ref([])
+const resetCard = ref(false)
 
 // Create random ids
 const randomIds = () => {
@@ -71,11 +76,25 @@ const handleIsFlipped = (value) => {
   if (flippedCard.value.length <= 1 && value.isFlipped) {
     flippedCard.value.push(value.pokemonId)
   }
-  console.log(flippedCard.value)
+  console.log('Incoming values', flippedCard.value)
   if (flippedCard.value.length === 2) {
     console.log('cards match?', cardsMatch())
+    // Check if ids are a match
+    if (cardsMatch()) {
+      isMatched.value.push(flippedCard.value[0])
+      console.log('Matched ID', isMatched.value)
+    } else {
+      setTimeout(() => {
+        resetCard.value = true
+      }, 700)
+    }
     flippedCard.value = []
   }
+}
+
+const handleReset = (value) => {
+  resetCard.value = false
+  console.log('handleReset', value)
 }
 
 // Checks if the cards are a match
