@@ -30,8 +30,6 @@ const props = defineProps({
   }
 })
 
-const { pokemon } = props
-
 // Data
 const isFlipped = ref(false)
 
@@ -41,7 +39,7 @@ const emits = defineEmits(['flip', 'sendBackReset'])
 // Watcher
 watch(
   () => props.resetCard,
-  (newValue, oldValue) => {
+  (newValue) => {
     if (newValue) {
       isFlipped.value = false
       emits('sendBackReset', false)
@@ -50,13 +48,13 @@ watch(
 )
 
 const isAMatch = computed(() => {
-  return isFlipped && props.isMatched.includes(pokemon.id)
+  return props.isMatched.includes(props.pokemon.id)
 })
 
 // Handle click on card
 const handleClick = () => {
   isFlipped.value = !isFlipped.value
-  emits('flip', { isFlipped: isFlipped.value, pokemonId: pokemon.id })
+  emits('flip', { isFlipped: isFlipped.value, pokemonId: props.pokemon.id })
 }
 </script>
 

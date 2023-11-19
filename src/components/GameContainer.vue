@@ -92,9 +92,8 @@ const handleIsFlipped = (value) => {
   }
 }
 
-const handleReset = (value) => {
+const handleReset = () => {
   resetCard.value = false
-  console.log('handleReset', value)
 }
 
 // Checks if the cards are a match
