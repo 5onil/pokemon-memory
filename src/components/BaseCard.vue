@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 import backSideCard from '../assets/backsidecard.svg'
 
 // props
@@ -24,13 +24,16 @@ const props = defineProps({
 
 const { pokemon } = props
 
-// data
-const isFlipped = ref(true)
+// Data
+const isFlipped = ref(false)
 
-// methods
+// Emitted events
+const emits = defineEmits(['flip'])
+
+// Handle click on card
 const handleClick = () => {
-  console.log(isFlipped.value)
   isFlipped.value = !isFlipped.value
+  emits('flip', { isFlipped: isFlipped.value, pokemonId: pokemon.id })
 }
 </script>
 
@@ -73,17 +76,17 @@ const handleClick = () => {
   background-color: burlywood;
 }
 
-.card-back {
+.card-front {
   transform: rotateY(180deg);
   z-index: 1;
   background-color: #f0f0f0; /* Change the background color for the back side */
 }
 
-.pokemon-card.flipped .card-front {
+.pokemon-card.flipped .card-back {
   transform: rotateY(180deg);
 }
 
-.pokemon-card.flipped .card-back {
+.pokemon-card.flipped .card-front {
   transform: rotateY(0deg);
 }
 </style>
