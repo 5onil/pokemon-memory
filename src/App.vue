@@ -1,5 +1,15 @@
 <script setup>
+import { ref } from 'vue'
 import GameContainer from './components/GameContainer.vue'
+import YouWon from './components/YouWon.vue'
+
+// Data
+const won = ref(false)
+
+// Show Won function
+const showWon = (value) => {
+  won.value = value
+}
 </script>
 
 <template>
@@ -15,8 +25,9 @@ import GameContainer from './components/GameContainer.vue'
   </header>
 
   <main>
-    <GameContainer />
+    <GameContainer @correct-response="showWon" />
   </main>
+  <YouWon v-if="won" />
 </template>
 
 <style scoped>

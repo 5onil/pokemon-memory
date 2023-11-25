@@ -1,7 +1,7 @@
 <template>
   <transition appear name="grow">
     <div class="pokemon-container" v-if="pokemons.length === 10">
-      <BaseCard
+      <base-card
         v-for="(pokemon, index) in pokemons"
         :key="index"
         :pokemon="pokemon"
@@ -17,13 +17,16 @@
 
 <script setup>
 import BaseCard from './BaseCard.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineEmits } from 'vue'
 
 // Data
 const pokemons = ref([])
 const flippedCard = ref([])
 const isMatched = ref([])
 const resetCard = ref(false)
+
+// Emits
+const emit = defineEmits(['correctResponse'])
 
 // Create random ids
 const randomIds = () => {
@@ -83,6 +86,9 @@ const handleIsFlipped = (value) => {
     if (cardsMatch()) {
       isMatched.value.push(flippedCard.value[0])
       console.log('Matched ID', isMatched.value)
+      if (isMatched.value.length === 5) {
+        emit('correctResponse', true)
+      }
     } else {
       setTimeout(() => {
         resetCard.value = true
