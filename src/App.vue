@@ -6,10 +6,17 @@ import GameTimer from './components/GameTimer.vue'
 
 // Data
 const won = ref(false)
+const gameTime = ref([])
 
 // Show Won function
 const showWon = (value) => {
   won.value = value
+}
+
+// Recived emits
+const handleGameTime = (h, m, s) => {
+  console.log('Recevied emit', h, m, s)
+  gameTime.value = [h, m, s]
 }
 </script>
 
@@ -23,13 +30,13 @@ const showWon = (value) => {
       <span class="top-title">You gotta catch ́em all</span>
       <span class="bottom-title">Let ́s do this!</span>
     </div>
-    <game-timer :stopTheTimer="won" />
+    <game-timer :stopTheTimer="won" @game-time="handleGameTime" />
   </header>
 
   <main>
     <GameContainer @correct-response="showWon" />
   </main>
-  <YouWon v-if="won" />
+  <YouWon v-if="won" :game-time="gameTime" />
 </template>
 
 <style scoped>

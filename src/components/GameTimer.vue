@@ -19,6 +19,9 @@ const props = defineProps({
   }
 })
 
+// Emitted events
+const emits = defineEmits(['gameTime'])
+
 // Data
 const secondes = ref(0)
 const minutes = ref(0)
@@ -69,6 +72,7 @@ watch(
   (newValue) => {
     if (newValue) {
       stopTimer()
+      emits('gameTime', hours.value, minutes.value, secondes.value)
     }
   }
 )
