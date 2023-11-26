@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import GameContainer from './components/GameContainer.vue'
 import YouWon from './components/YouWon.vue'
+import GameTimer from './components/GameTimer.vue'
 
 // Data
 const won = ref(false)
@@ -22,6 +23,7 @@ const showWon = (value) => {
       <span class="top-title">You gotta catch ́em all</span>
       <span class="bottom-title">Let ́s do this!</span>
     </div>
+    <game-timer :stopTheTimer="won" />
   </header>
 
   <main>
