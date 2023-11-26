@@ -74,7 +74,7 @@ const handleClick = () => {
   width: 150px;
   height: 216px;
   flex: 1;
-  flex-basis: 15%;
+  flex-basis: auto;
   cursor: pointer;
   perspective: 1000px; /* This defines how far the 3D space is */
 }
