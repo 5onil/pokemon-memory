@@ -1,5 +1,9 @@
 <template>
-  <div @click="handleClick" class="pokemon-card" :class="isFlipped || isAMatch ? 'flipped' : ''">
+  <div
+    @click="handleClick"
+    class="pokemon-card"
+    :class="[isFlipped || isAMatch ? 'flipped' : '', isAMatch ? 'match shake' : '']"
+  >
     <div class="card-back">
       <img :src="backSideCard" alt="back side of card" />
     </div>
@@ -47,6 +51,7 @@ watch(
   }
 )
 
+// Computed
 const isAMatch = computed(() => {
   return props.isMatched.includes(props.pokemon.id)
 })
@@ -59,8 +64,11 @@ const handleClick = () => {
 </script>
 
 <style scoped>
+.flipped {
+  pointer-events: none;
+}
 .match .card-front {
-  border: 4px solid red;
+  box-shadow: 0px 0px 12px 3px rgb(225 172 31 / 87%);
 }
 .pokemon-card {
   width: 150px;
@@ -85,6 +93,9 @@ const handleClick = () => {
   height: 100%;
   border-radius: 6px;
 }
+.match .card-front img {
+  filter: drop-shadow(2px 3px 1px rgb(0 0 0 / 45%));
+}
 .card-front {
   width: 100%;
   height: 100%;
@@ -94,10 +105,19 @@ const handleClick = () => {
   flex-direction: column;
   background-color: #ffffff;
 }
+.match .card-front {
+  background-color: #eba64e;
+}
 .card-front h2 {
   border-radius: 6px 6px 0 0;
   text-align: center;
   background-color: burlywood;
+}
+.match .card-front h2 {
+  border-radius: 6px 6px 0 0;
+  background-color: #c48a40;
+  text-shadow: 1px 1px 1px #000;
+  color: #fff;
 }
 
 .card-front {
@@ -112,5 +132,46 @@ const handleClick = () => {
 
 .pokemon-card.flipped .card-front {
   transform: rotateY(0deg);
+}
+
+.shake {
+  animation: shakeAnimation 1s ease-in-out;
+}
+
+/* Animations */
+@keyframes shakeAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateY(-10px);
+  }
+  20% {
+    transform: translateY(10px);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(10px);
+  }
+  70% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(10px);
+  }
+  90% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

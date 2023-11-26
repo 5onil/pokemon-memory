@@ -17,7 +17,7 @@
 
 <script setup>
 import BaseCard from './BaseCard.vue'
-import { ref, onMounted, defineEmits } from 'vue'
+import { ref, onMounted } from 'vue'
 
 // Data
 const pokemons = ref([])
@@ -116,7 +116,7 @@ onMounted(() => {
 .pokemon-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 25px;
 }
 
 .grow-enter-active {
