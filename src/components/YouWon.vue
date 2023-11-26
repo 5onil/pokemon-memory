@@ -26,9 +26,11 @@
 import { onMounted, ref } from 'vue'
 import BgConfetti from './BgConfetti.vue'
 import ButtonWon from './ButtonWon.vue'
+import wonSoundFile from './audio/won-sound.mp3'
 
 // Data
 const showWin = ref(false)
+const wonSound = new Audio(wonSoundFile)
 
 // Props
 const props = defineProps({
@@ -45,6 +47,8 @@ const handleReload = () => {
 
 const showDelay = () => {
   setTimeout(() => {
+    wonSound.loop = true
+    wonSound.play()
     showWin.value = true
   }, 3000)
 }

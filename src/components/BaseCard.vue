@@ -17,6 +17,7 @@
 <script setup>
 import { ref, defineProps, watch, computed } from 'vue'
 import backSideCard from '../assets/backsidecard.svg'
+import clickSoundFile from './audio/click-sound.mp3'
 
 // props
 const props = defineProps({
@@ -36,6 +37,7 @@ const props = defineProps({
 
 // Data
 const isFlipped = ref(false)
+const clickSound = new Audio(clickSoundFile)
 
 // Emitted events
 const emits = defineEmits(['flip', 'sendBackReset'])
@@ -59,6 +61,7 @@ const isAMatch = computed(() => {
 // Handle click on card
 const handleClick = () => {
   isFlipped.value = !isFlipped.value
+  clickSound.play()
   emits('flip', { isFlipped: isFlipped.value, pokemonId: props.pokemon.id })
 }
 </script>

@@ -18,12 +18,14 @@
 <script setup>
 import BaseCard from './BaseCard.vue'
 import { ref, onMounted } from 'vue'
+import matchSoundFile from './audio/match-sound.mp3'
 
 // Data
 const pokemons = ref([])
 const flippedCard = ref([])
 const isMatched = ref([])
 const resetCard = ref(false)
+const matchSound = new Audio(matchSoundFile)
 
 // Emits
 const emit = defineEmits(['correctResponse'])
@@ -86,6 +88,7 @@ const handleIsFlipped = (value) => {
     if (cardsMatch()) {
       isMatched.value.push(flippedCard.value[0])
       console.log('Matched ID', isMatched.value)
+      matchSound.play()
       if (isMatched.value.length === 5) {
         emit('correctResponse', true)
       }
