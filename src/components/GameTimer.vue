@@ -1,9 +1,9 @@
 <template>
   <div class="stop-watch-container">
     <p class="stop-watch">
-      <span>{{ hours ? `${zeroHor}${hours}` : `${zeroHor}0` }}</span
-      >:<span>{{ minutes ? `${zeroMin}${minutes}` : `${zeroMin}0` }}</span
-      >:<span>{{ secondes ? `${zero}${secondes}` : `${zero}0` }}</span>
+      <span>{{ hours ? `${zeroHor}${hours}` : `00` }}</span
+      >:<span>{{ minutes ? `${zeroMin}${minutes}` : `00` }}</span
+      >:<span>{{ secondes ? `${zero}${secondes}` : `00` }}</span>
     </p>
   </div>
 </template>
